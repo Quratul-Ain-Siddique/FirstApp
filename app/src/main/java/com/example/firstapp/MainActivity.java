@@ -50,16 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private void initListeners() {
         calculateSquareRoot.setOnClickListener(v -> onSquareClick());
         calculateSquare.setOnClickListener(v -> onCalculateSquareClick());
-
-        setCallback(() -> 12);
-    }
-
-    private void setCallback(Callback callback){
-        callback.calculate();
-    }
-
-    interface Callback{
-        int calculate();
     }
 
     /**
