@@ -51,17 +51,15 @@ public class MainActivity extends AppCompatActivity {
         calculateSquareRoot.setOnClickListener(v -> onSquareClick());
         calculateSquare.setOnClickListener(v -> onCalculateSquareClick());
 
-        setCallback((int first, float second) -> {
-            return (int) second;
-        });
+        setCallback(() -> 12);
     }
 
     private void setCallback(Callback callback){
-        callback.calculate(23,23f);
+        callback.calculate();
     }
 
     interface Callback{
-        int calculate(int a, float b);
+        int calculate();
     }
 
     /**
