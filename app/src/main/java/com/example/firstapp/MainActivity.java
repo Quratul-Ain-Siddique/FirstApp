@@ -5,12 +5,15 @@ import static java.lang.String.valueOf;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     // views declarations
     private EditText number;
@@ -66,10 +69,39 @@ public class MainActivity extends AppCompatActivity {
      * Called on square button click
      */
     private void onCalculateSquareClick() {
+        Log.i(TAG, "Calling load data");
+        loadDataFromServer(new SuccessListener() {
+            @Override
+            public void onSuccess() {
+                Log.i(TAG, "onSuccess: ");
+            }
+        });
+        Log.i(TAG, "Continuing normal execution");
+        Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
         Toast.makeText(MainActivity.this, "Calculating Square ", Toast.LENGTH_SHORT).show();
         int a = Integer.parseInt(firstNumber.getText().toString());
         int b = Integer.parseInt(secondNumber.getText().toString());
         int square = Utils.calculateSquare(a, b);
         tvSqrtResult.setText(square);
+
+    }
+
+    interface SuccessListener{
+        void onSuccess();
+    }
+    void loadDataFromServer(SuccessListener successListener){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO
+                try {
+                    Thread.sleep(4000L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                successListener.onSuccess();
+            }
+        });
+        t.start();
     }
 }
